@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1086480897372",
+    "firebase_url": "https://carworld-7b1de.firebaseio.com",
+    "project_id": "carworld-7b1de",
+    "storage_bucket": "carworld-7b1de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086480897372:android:cfd7933c4101a8f532dd99",
+        "android_client_info": {
+          "package_name": "com.example.carworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1086480897372-skrj0aktoos0a678opr34vngchi7bblf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.carworld",
+            "certificate_hash": "197f0c1689989696ba51c850458db64429b2a6f5"
+          }
+        },
+        {
+          "client_id": "1086480897372-ba1v51gntsgb76fj7iohrg7vpvd1e3vo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCp6Xze19a2wnS6sDZsLPix-Pvmhqu-hNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1086480897372-ba1v51gntsgb76fj7iohrg7vpvd1e3vo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
