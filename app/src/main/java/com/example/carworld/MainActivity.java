@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (useremail.getText().toString().isEmpty() || userpassword.getText().toString().isEmpty())
         {
-            Toast.makeText(getApplicationContext(),"Please make sure both fields are filled",Toast.LENGTH_SHORT).show();
-        }
+            Toast.makeText(getApplicationContext(),"Please make sure both fields are filled",Toast.LENGTH_LONG).show();
+    }
 
         else {
 
@@ -86,12 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                                     }
-                                else if(!dataSnapshot.child(current_user_id).hasChild("profileimage")){
 
-                                    sendUsertoSetup();
-
-
-                                }
                                 else
                                 {
 
@@ -121,6 +116,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkUserExistence(){
 
+        final String current_user_id = mAuth.getCurrentUser().getUid();
+
+        userref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if(!dataSnapshot.hasChild(current_user_id))
+                {
+                    sendUsertoNews();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

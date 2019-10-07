@@ -4,16 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#03A9F4"
     tools:context=".SetupActivity">
 
     <EditText
         android:id="@+id/fullname"
+        style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
         android:layout_width="324dp"
         android:layout_height="60dp"
+
         android:ems="10"
         android:gravity="start|top"
         android:hint="Full Name"
         android:inputType="textMultiLine"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
@@ -22,13 +27,17 @@
         app:layout_constraintVertical_bias="0.524" />
 
     <EditText
-        android:id="@+id/country"
+        android:id="@+id/car"
+        style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
         android:layout_width="324dp"
         android:layout_height="60dp"
+
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Country"
+        android:hint="Car"
         android:inputType="textMultiLine"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
@@ -50,13 +59,17 @@
         tools:srcCompat="@drawable/dp" />
 
     <EditText
-        android:id="@+id/nav_user_full_name"
+        android:id="@+id/username"
+        style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
         android:layout_width="324dp"
         android:layout_height="60dp"
+
         android:ems="10"
         android:gravity="start|top"
         android:hint="Username"
         android:inputType="textMultiLine"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -65,10 +78,14 @@
         app:layout_constraintVertical_bias="0.391" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/save"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="322dp"
         android:layout_height="80dp"
+        android:background="#9AD2F1"
         android:text="Save"
+        android:onClick="saveUser"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"
