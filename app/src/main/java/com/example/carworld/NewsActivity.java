@@ -38,6 +38,7 @@ public class NewsActivity extends AppCompatActivity {
 
         drawerLayout=(DrawerLayout) findViewById(R.id.drawable_layout);
         navigationView=(NavigationView) findViewById(R.id.navigation_view);
+        View navView =navigationView.inflateHeaderView(R.layout.navigation_header);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -45,7 +46,7 @@ public class NewsActivity extends AppCompatActivity {
                 return false;
             }
         });
-        onStart();
+            onStart();
 
 
     }
@@ -70,7 +71,7 @@ public class NewsActivity extends AppCompatActivity {
                 }
 
                 else{
-                    Toast.makeText(getApplicationContext(),"User exists" ,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Welcome" ,Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -104,6 +105,14 @@ public class NewsActivity extends AppCompatActivity {
             case R.id.nav_logout:
 
                 Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                break;
+        }
+        switch (item.getItemId())
+        {
+            case R.id.nav_profile:
+
+                Intent intent = new Intent(this,ProfileActivity.class);
                 startActivity(intent);
                 break;
         }

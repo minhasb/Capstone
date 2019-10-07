@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.524" />
 
     <EditText
-        android:id="@+id/car"
+        android:id="@+id/profile_carname"
         style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
         android:layout_width="324dp"
         android:layout_height="60dp"
@@ -49,6 +49,7 @@
         android:id="@+id/displaypic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onPic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -59,7 +60,7 @@
         tools:srcCompat="@drawable/dp" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/profile_username"
         style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
         android:layout_width="324dp"
         android:layout_height="60dp"

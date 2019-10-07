@@ -126,4 +126,17 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         return pat.matcher(email).matches();
     }
+
+    public void goBack(View view) {
+
+        sendToHome();
+    }
+
+    private void sendToHome() {
+        Intent setup = new Intent(this,MainActivity.class);
+        setup.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(setup);
+        finish();
+    }
+
 }
