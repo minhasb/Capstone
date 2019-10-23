@@ -116,5 +116,15 @@ public class NewsActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
         }
+        switch (item.getItemId())
+        {
+            case R.id.nav_post:
+
+                Intent intent = new Intent(this,PostActivity.class);
+                startActivity(intent);
+                break;
+        }
+
+
     }
 }

@@ -3,13 +3,21 @@ package com.example.carworld;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +33,12 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class SetupActivity extends AppCompatActivity {
@@ -39,6 +52,10 @@ public class SetupActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     private DatabaseReference usersRef;
     private StorageReference userProfileImageReference;
+    private Spinner dropdown;
+    private ArrayList<String> carList;
+    private ArrayList<String> makeList;
+    private Spinner modelSpinner;
 
     ProgressDialog loadingbar;
 
@@ -56,9 +73,11 @@ public class SetupActivity extends AppCompatActivity {
         profilePic=findViewById(R.id.displaypic);
         mAuth=FirebaseAuth.getInstance();
         userProfileImageReference=FirebaseStorage.getInstance().getReference().child("Profile Images");
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         currentUserId=mAuth.getCurrentUser().getUid();
         usersRef= FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
+
+        addMake();
 
 
     }
@@ -88,7 +107,7 @@ else {
                 sendToNews();
             } else {
                 String message = task.getException().getMessage();
-                Toast.makeText(getApplicationContext(), "ERROR:" + message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "ERROR:" + message, Toast.LENGTH_LONG).show();
                 loadingbar.dismiss();
             }
         }
@@ -193,4 +212,112 @@ else {
             }
         }
     }
+
+
+    public void addMake(){
+
+     dropdown = findViewById(R.id.make);
+   makeList = new ArrayList<>();
+         carList= new ArrayList<>();
+      modelSpinner= findViewById(R.id.make);
+
+
+
+        try {
+
+
+
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open("carList.txt")));
+
+            String line = reader.readLine();
+            while (line != null) {
+
+                String full[]= line.split(",");
+
+                String year= full[0].substring(full[0].lastIndexOf("(")+1);
+                String make=full[1].substring(2,full[1].length()-1);
+                String model=full[2].substring(2,full[2].length()-2);
+
+                makeList.add(make + " " + model);
+                System.out.println(model);
+                // read next line
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        //
+
+/*
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Toast.makeText(getApplicationContext(),parentView.getItemAtPosition(position).toString(),Toast.LENGTH_LONG).show();
+
+                try {
+
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open("carList.txt")));
+
+                    String line = reader.readLine();
+                    String full[] = new String[100000];
+                    while (line != null) {
+                        if (line.contains(parentView.getItemAtPosition(position).toString())) {
+                            full = line.split(",");
+
+
+                            String model = full[2].substring(2, full[2].length() - 2);
+                            modelList.add(model);
+                            System.out.println(model);
+                            // read next line
+                        }
+                        line = reader.readLine();
+
+                    }
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+
+        });
+
+*/
+
+
+
+
+
+carList= returnList(makeList);
+        Collections.sort(carList);
+        ArrayAdapter<String> makeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, carList);
+        dropdown.setAdapter(makeAdapter);
+    }
+
+    public ArrayList<String> returnList(ArrayList<String> list)
+    {
+        HashSet<String> hashSet = new HashSet<String>();
+        hashSet.addAll(list);
+        list.clear();
+        list.addAll(hashSet);
+
+        return list;
+    }
+
 }
+
+

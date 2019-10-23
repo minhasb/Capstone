@@ -26,16 +26,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.524" />
 
-    <EditText
-        android:id="@+id/profile_carname"
-        style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
-        android:layout_width="324dp"
-        android:layout_height="60dp"
-
+    <Spinner
+        android:id="@+id/make"
+        android:layout_width="218dp"
+        android:layout_height="42dp"
+        android:background="@android:drawable/btn_dropdown"
         android:ems="10"
+
         android:gravity="start|top"
         android:hint="Car"
         android:inputType="textMultiLine"
+        android:spinnerMode="dropdown"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -44,6 +45,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.644" />
+
+
+    <Spinner
+        android:id="@+id/model"
+        android:layout_width="218dp"
+        android:layout_height="42dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:ems="10"
+
+        android:gravity="start|top"
+        android:hint="Car"
+        android:inputType="textMultiLine"
+        android:spinnerMode="dropdown"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.764" />
 
     <ImageView
         android:id="@+id/displaypic"
@@ -84,14 +106,14 @@
         android:layout_width="322dp"
         android:layout_height="80dp"
         android:background="#9AD2F1"
-        android:text="Save"
         android:onClick="saveUser"
+        android:text="Save"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.829" />
+        app:layout_constraintVertical_bias="0.926" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
