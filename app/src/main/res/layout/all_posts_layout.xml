@@ -6,12 +6,13 @@
     >
 
     <LinearLayout
-        android:layout_width="401dp"
-        android:layout_height="340dp"
+        android:layout_width="402dp"
+        android:layout_height="645dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/post_border"
         android:orientation="vertical">
 
         <LinearLayout
@@ -90,7 +91,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/post_description"
+            android:id="@+id/click_post_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"
@@ -103,7 +104,7 @@
         </TextView>
 
         <ImageView
-            android:id="@+id/post_image"
+            android:id="@+id/click_post_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_margin="3dp"

@@ -21,7 +21,7 @@
         app:civ_border_width="2dp" />
 
     <TextView
-        android:id="@+id/profile_username"
+        android:id="@+id/header_username"
         android:layout_width="103dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"

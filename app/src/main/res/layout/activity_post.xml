@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/post_description"
+        android:id="@+id/click_post_description"
         android:layout_width="373dp"
         android:layout_height="109dp"
         android:hint="Write something about yout post here"
@@ -51,5 +51,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_description" />
+        app:layout_constraintTop_toBottomOf="@+id/click_post_description" />
 </androidx.constraintlayout.widget.ConstraintLayout>

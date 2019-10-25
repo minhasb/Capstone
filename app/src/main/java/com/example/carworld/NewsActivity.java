@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +23,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -45,10 +47,13 @@ public class NewsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth=FirebaseAuth.getInstance();
+
         PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         query = FirebaseDatabase.getInstance().getReference().child("Posts");
         drawerLayout=(DrawerLayout) findViewById(R.id.drawable_layout);
@@ -62,6 +67,7 @@ public class NewsActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         postList.setLayoutManager(linearLayoutManager);
         DisplayAllUsersPosts();
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -81,12 +87,26 @@ public class NewsActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Posts, PostsViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull PostsViewHolder postsViewHolder, int position, @NonNull Posts posts) {
+
+                final String PostKey = getRef(position).getKey();
                 postsViewHolder.setFullname(posts.getFullname());
                 postsViewHolder.setDescription(posts.getDescription());
                 postsViewHolder.setProfileImage(getApplicationContext(),posts.getProfileimage());
                 postsViewHolder.setPostImage(getApplicationContext(),posts.getPostimage());
                 postsViewHolder.setDate(posts.getDate());
                 postsViewHolder.SetTime(posts.getTime());
+
+                postsViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent clickPostIntent = new Intent (NewsActivity.this
+                                , ClickPostActivity.class);
+                        clickPostIntent.putExtra("PostKey",PostKey);
+
+                        startActivity(clickPostIntent);
+
+                    }
+                });
             }
 
             @NonNull
@@ -139,12 +159,12 @@ public class NewsActivity extends AppCompatActivity {
         }
 
         public void setDescription (String description){
-            TextView postDescription = (TextView) mView.findViewById(R.id.post_description);
+            TextView postDescription = (TextView) mView.findViewById(R.id.click_post_description);
             postDescription.setText(description);
         }
 
         public void setPostImage (Context ctx1, String postImage){
-            ImageView postImages = (ImageView) mView.findViewById(R.id.post_image);
+            ImageView postImages = (ImageView) mView.findViewById(R.id.click_post_image);
             Picasso.get().load(postImage).into(postImages);
         }
     }
@@ -206,7 +226,7 @@ public class NewsActivity extends AppCompatActivity {
         {
             case R.id.nav_profile:
 
-                Intent intent = new Intent(this,ProfileActivity.class);
+                Intent intent = new Intent(this,UserProfile.class);
                 startActivity(intent);
                 break;
         }
@@ -218,7 +238,18 @@ public class NewsActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
         }
+        switch (item.getItemId())
+        {
+            case R.id.nav_settings:
+
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+        }
 
 
     }
+
+
+
 }

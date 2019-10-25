@@ -62,7 +62,7 @@ public class PostActivity extends AppCompatActivity {
         PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         SelectPostImage=(ImageButton) findViewById(R.id.select_post_image);
         UpdatePostButton=findViewById(R.id.post_button);
-        PostDescription=findViewById(R.id.post_description);
+        PostDescription=findViewById(R.id.click_post_description);
         loadingBar= new ProgressDialog(this);
 
 
@@ -188,7 +188,7 @@ public class PostActivity extends AppCompatActivity {
                                 {
                                     if(task.isSuccessful())
                                     {
-                                        SendUserToMainActivity();
+                                        SendUserToNews();
                                         Toast.makeText(PostActivity.this, "New Post is updated successfully.", Toast.LENGTH_SHORT).show();
                                         loadingBar.dismiss();
                                     }
@@ -210,9 +210,9 @@ public class PostActivity extends AppCompatActivity {
     }
 
 
-    private void SendUserToMainActivity()
+    private void SendUserToNews()
     {
-        Intent mainIntent = new Intent(PostActivity.this, MainActivity.class);
+        Intent mainIntent = new Intent(PostActivity.this, NewsActivity.class);
         startActivity(mainIntent);
     }
 

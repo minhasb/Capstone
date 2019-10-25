@@ -46,16 +46,17 @@ public class SetupActivity extends AppCompatActivity {
 
     private TextView username;
     private TextView fullName;
-    private TextView car;
+
     private ImageView profilePic;
     final static int Gallery_Pick=1;
     FirebaseAuth mAuth;
+
     private DatabaseReference usersRef;
     private StorageReference userProfileImageReference;
     private Spinner dropdown;
     private ArrayList<String> carList;
     private ArrayList<String> makeList;
-    private Spinner modelSpinner;
+  //  private Spinner modelSpinner;
 
     ProgressDialog loadingbar;
 
@@ -66,9 +67,10 @@ public class SetupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
-        username=findViewById(R.id.profile_username);
-        fullName=findViewById(R.id.fullname);
-        car=findViewById(R.id.profile_carname);
+        username=(TextView)findViewById(R.id.profile_username);
+        fullName=(TextView)findViewById(R.id.fullname);
+      //  modelSpinner= findViewById(R.id.car);
+        dropdown = (Spinner)findViewById(R.id.setup_carname);
         loadingbar= new ProgressDialog(this);
         profilePic=findViewById(R.id.displaypic);
         mAuth=FirebaseAuth.getInstance();
@@ -84,7 +86,7 @@ public class SetupActivity extends AppCompatActivity {
 
 
     public void saveUser(View view) {
-if(username.getText().toString().isEmpty()||fullName.getText().toString().isEmpty()||car.getText().toString().isEmpty())
+if(username.getText().toString().isEmpty()||fullName.getText().toString().isEmpty())
 {
     Toast.makeText(getApplicationContext(),"Please make sure all fields are filled",Toast.LENGTH_LONG).show();
 }
@@ -92,7 +94,7 @@ else {
     Map<String, Object> userMap = new HashMap<>();
     userMap.put("username", username.getText().toString());
     userMap.put("fullname", fullName.getText().toString());
-    userMap.put("car", car.getText().toString());
+    userMap.put("car", dropdown.getSelectedItem().toString());
     userMap.put("dob", "Date here");
     userMap.put("status", "status here");
     userMap.put("country", "Canada");
@@ -118,15 +120,6 @@ else {
     }
     private void sendToNews() {
 
-       /* CountryPicker picker = CountryPicker.newInstance("Select Country");  // dialog title
-        picker.setListener(new CountryPickerListener() {
-            @Override
-            public void onSelectCountry(String name, String code, String dialCode, int flagDrawableResID) {
-                // Implement your code here
-            }
-        });
-        picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
-        */
 
         Intent setup = new Intent(this,NewsActivity.class);
         setup.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -216,10 +209,10 @@ else {
 
     public void addMake(){
 
-     dropdown = findViewById(R.id.make);
+
    makeList = new ArrayList<>();
          carList= new ArrayList<>();
-      modelSpinner= findViewById(R.id.make);
+
 
 
 
@@ -307,6 +300,7 @@ carList= returnList(makeList);
         ArrayAdapter<String> makeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, carList);
         dropdown.setAdapter(makeAdapter);
     }
+
 
     public ArrayList<String> returnList(ArrayList<String> list)
     {
