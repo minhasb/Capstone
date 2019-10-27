@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#03A9F4"
     tools:context=".ClickPostActivity">
 
     <ImageView
@@ -23,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="TextView"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -32,8 +34,11 @@
 
     <Button
         android:id="@+id/edit_post_btn"
-        android:layout_width="252dp"
-        android:layout_height="57dp"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+        android:layout_width="322dp"
+        android:layout_height="80dp"
+        android:background="#9AD2F1"
+        android:textSize="25dp"
         android:layout_marginTop="60dp"
         android:text="Edit "
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,8 +48,11 @@
 
     <Button
         android:id="@+id/delete_post_btn"
-        android:layout_width="263dp"
-        android:layout_height="67dp"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+        android:layout_width="322dp"
+        android:layout_height="80dp"
+        android:background="#9AD2F1"
+        android:textSize="25dp"
         android:layout_marginBottom="16dp"
         android:text="Delete "
         app:layout_constraintBottom_toBottomOf="parent"

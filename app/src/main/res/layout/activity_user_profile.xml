@@ -87,10 +87,10 @@
 
                 ></TextView>
             <TextView
-                android:id="@+id/my_country"
+                android:id="@+id/my_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="country"
+                android:text="Location"
                 android:layout_below="@id/my_car"
                 android:layout_marginTop="10dp"
                 android:textAllCaps="false"

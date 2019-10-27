@@ -73,12 +73,12 @@ public class ClickPostActivity extends AppCompatActivity {
                         EditPostButton.setVisibility(View.VISIBLE);
                     }
 
-                EditPostButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        EditCurrentPost(description);
-                    }
-                });
+                    EditPostButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            EditCurrentPost(description);
+                        }
+                    });
                 }
 
             }
@@ -90,12 +90,12 @@ public class ClickPostActivity extends AppCompatActivity {
             }
         });
 
-DeletePostButton.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        DeleteCurrentPost();
-    }
-});
+        DeletePostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DeleteCurrentPost();
+            }
+        });
 
     }
 
@@ -124,9 +124,9 @@ DeletePostButton.setOnClickListener(new View.OnClickListener() {
                 dialogInterface.cancel();
             }
         });
-            Dialog dialog = builder.create();
-            dialog.show();
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_blue_dark);
+        Dialog dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_blue_dark);
 
     }
 

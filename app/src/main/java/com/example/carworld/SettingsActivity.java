@@ -79,16 +79,21 @@ Settingsuserref.addValueEventListener(new ValueEventListener() {
            String myProfileName = dataSnapshot.child("fullname").getValue().toString();
            String myProfileCar = dataSnapshot.child("car").getValue().toString();
            String myProfileStatus = dataSnapshot.child("status").getValue().toString();
-           String myProfileCountry= dataSnapshot.child("country").getValue().toString();
+           String myProfileCountry= dataSnapshot.child("location").getValue().toString();
            String myProfiledob = dataSnapshot.child("dob").getValue().toString();
-        String myProfileImage = dataSnapshot.child("profileimage").getValue().toString();
-          Picasso.get().load(myProfileImage).placeholder(R.drawable.profile).into(userProfileImage);
 
+           if(dataSnapshot.child("profileimage").exists()) {
+               String myProfileImage = dataSnapshot.child("profileimage").getValue().toString();
+
+               Picasso.get().load(myProfileImage).placeholder(R.drawable.profile).into(userProfileImage);
+           }
 
            username.setText(myUserName);
            userprofilename.setText(myProfileName);
            userstatus.setText(myProfileStatus);
-
+           //setting value for car dropdown
+           ArrayAdapter carAdap= (ArrayAdapter)dropdown.getAdapter();
+           dropdown.setSelection(carAdap.getPosition(myProfileCar));
 
           dropdown.setSelection(getIndex(dropdown,myProfileCar));
        }
@@ -172,9 +177,9 @@ UpdateAccountSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Account Created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Profile Settings Updated", Toast.LENGTH_SHORT).show();
 
-                    sendToNews();
+
                 } else {
                     String message = task.getException().getMessage();
                     Toast.makeText(getApplicationContext(), "ERROR:" + message, Toast.LENGTH_LONG).show();

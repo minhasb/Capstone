@@ -30,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        username = findViewById(R.id.profile_username);
+        username = findViewById(R.id.setup_groupname);
         userfullname=findViewById(R.id.profile_fullname);
         usercarname=findViewById(R.id.profile_carname);
         userbio=findViewById(R.id.profile_bio);

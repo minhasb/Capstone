@@ -42,6 +42,10 @@ public class NewsActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private RecyclerView postList;
+    private CircleImageView NavProfileImage;
+    private TextView NavProfileUserName;
+   private String currentUserID;
+
 
 
     @Override
@@ -53,12 +57,17 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news);
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth=FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
 
         PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         query = FirebaseDatabase.getInstance().getReference().child("Posts");
         drawerLayout=(DrawerLayout) findViewById(R.id.drawable_layout);
         navigationView=(NavigationView) findViewById(R.id.navigation_view);
-        View navView =navigationView.inflateHeaderView(R.layout.navigation_header);
+        View navView = navigationView.inflateHeaderView(R.layout.navigation_header);
+        NavProfileImage = (CircleImageView) navView.findViewById(R.id.header_image);
+        NavProfileUserName = (TextView) navView.findViewById(R.id.header_username);
+
+
 
         postList = (RecyclerView) findViewById(R.id.all_users_post_list);
         postList.setHasFixedSize(true);
@@ -68,6 +77,36 @@ public class NewsActivity extends AppCompatActivity {
         postList.setLayoutManager(linearLayoutManager);
         DisplayAllUsersPosts();
 
+
+        UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if(dataSnapshot.exists())
+                {
+                    if(dataSnapshot.hasChild("fullname"))
+                    {
+                        String fullname = dataSnapshot.child("fullname").getValue().toString();
+                        NavProfileUserName.setText(fullname);
+                    }
+                    if(dataSnapshot.hasChild("profileimage"))
+                    {
+                        String image = dataSnapshot.child("profileimage").getValue().toString();
+                        Picasso.get().load(image).into(NavProfileImage);
+
+                    }
+                    else
+                    {
+                        Toast.makeText(NewsActivity.this, "Profile name do not exists...", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -182,7 +221,7 @@ public class NewsActivity extends AppCompatActivity {
                 }
 
                 else{
-                    Toast.makeText(getApplicationContext(),"Welcome" ,Toast.LENGTH_SHORT).show();
+
                 }
             }
 
@@ -243,6 +282,14 @@ public class NewsActivity extends AppCompatActivity {
             case R.id.nav_settings:
 
                 Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+        }
+        switch (item.getItemId())
+        {
+            case R.id.nav_groups:
+
+                Intent intent = new Intent(this, GroupsActivity.class);
                 startActivity(intent);
                 break;
         }

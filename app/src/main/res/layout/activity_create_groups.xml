@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#03A9F4"
-    tools:context=".SetupActivity">
+    android:background="#03A9F4">
 
     <EditText
         android:id="@+id/setup_group_location"
@@ -15,7 +14,7 @@
 
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Full Name"
+        android:hint="Location"
         android:inputType="textMultiLine"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -28,11 +27,11 @@
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/setup_group_carname"
-        android:layout_width="324dp"
-        android:layout_height="60dp"
+        android:layout_width="218dp"
+        android:layout_height="42dp"
+       app:hintText="Group Car"
         android:ems="10"
-        app:hintText="Select a car"
-        android:layout_marginTop="30dp"
+
         android:gravity="start|top"
         android:hint="Car"
         android:inputType="textMultiLine"
@@ -69,11 +68,10 @@
 
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Username"
+        android:hint="Group name"
         android:inputType="textMultiLine"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -83,12 +81,13 @@
 
     <Button
         android:id="@+id/save"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+        style="@android:style/Widget.Button"
         android:layout_width="322dp"
         android:layout_height="80dp"
         android:background="#9AD2F1"
-        android:onClick="saveUser"
+        android:onClick="saveGroup"
         android:text="Save"
+        android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

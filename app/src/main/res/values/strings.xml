@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CarWorld</string>
+    <string name="title_activity_create_group">CreateGroup</string>
 </resources>

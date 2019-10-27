@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -126,10 +127,15 @@ public class PostActivity extends AppCompatActivity {
                 if(task.isSuccessful())
                 {
                     StorageReference filePath = PostsImagesRefrence.child("Post Images").child(ImageUri.getLastPathSegment() + postRandomName + ".jpg");
-                    downloadUrl = filePath.getDownloadUrl().toString();
-                    Toast.makeText(PostActivity.this, "image uploaded successfully to Storage...", Toast.LENGTH_SHORT).show();
+                    filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Toast.makeText(PostActivity.this, "image uploaded successfully to Storage...", Toast.LENGTH_SHORT).show();
+                                downloadUrl=uri.toString();
+                            SavingPostInformationToDatabase();
+                        }
+                    });
 
-                    SavingPostInformationToDatabase();
 
                 }
                 else
@@ -171,7 +177,7 @@ public class PostActivity extends AppCompatActivity {
                 if(dataSnapshot.exists())
                 {
                     String userFullName = dataSnapshot.child("fullname").getValue().toString();
-//                    String userProfileImage = dataSnapshot.child("profileimage").getValue().toString();
+                  String userProfileImage = dataSnapshot.child("profileimage").getValue().toString();
 
                     HashMap postsMap = new HashMap();
                     postsMap.put("uid", current_user_id);
@@ -179,7 +185,7 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("time", saveCurrentTime);
                     postsMap.put("description", Description);
                     postsMap.put("postimage", downloadUrl);
-              //   postsMap.put("profileimage", userProfileImage);
+                postsMap.put("profileimage", userProfileImage);
                     postsMap.put("fullname", userFullName);
                     PostsRef.child(current_user_id + postRandomName).updateChildren(postsMap)
                             .addOnCompleteListener(new OnCompleteListener() {

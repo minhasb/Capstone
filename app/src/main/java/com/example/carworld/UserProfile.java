@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -24,7 +25,7 @@ public class UserProfile extends AppCompatActivity {
     private TextView username;
     private TextView userfullname;
     private TextView usercarname;
-    private TextView userstatus,usercountry;
+    private TextView userstatus,userlocation;
 
     private CircleImageView userProfileImage;
 
@@ -40,8 +41,8 @@ public class UserProfile extends AppCompatActivity {
         userfullname=findViewById(R.id.my_profile_full_name);
         usercarname=findViewById(R.id.my_car);
         userstatus=findViewById(R.id.my_profile_status);
-        usercountry=findViewById(R.id.my_country);
-
+        userlocation=findViewById(R.id.my_location);
+        userProfileImage=(CircleImageView)findViewById(R.id.my_profile_pic);
         userref= FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth=FirebaseAuth.getInstance();
         //to hide keyboard when starting up
@@ -65,7 +66,9 @@ public class UserProfile extends AppCompatActivity {
                 userfullname.setText(dataSnapshot.child(current_user_id).child("fullname").getValue().toString());
                 userstatus.setText(dataSnapshot.child(current_user_id).child("status").getValue().toString());
                 usercarname.setText(dataSnapshot.child(current_user_id).child("car").getValue().toString());
-                usercountry.setText(dataSnapshot.child(current_user_id).child("country").getValue().toString());
+                userlocation.setText(dataSnapshot.child(current_user_id).child("location").getValue().toString());
+
+                Picasso.get().load(dataSnapshot.child(current_user_id).child("profileimage").getValue().toString()).into(userProfileImage);
             }
 
             @Override
