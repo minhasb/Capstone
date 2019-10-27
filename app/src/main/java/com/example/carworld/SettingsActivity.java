@@ -69,7 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
         Settingsuserref= FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserid);
         UpdateAccountSettingsButton=(Button)findViewById(R.id.update_account_settings_button);
 
-
+///
 Settingsuserref.addValueEventListener(new ValueEventListener() {
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
