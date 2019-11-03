@@ -104,17 +104,24 @@ public class CreateGroupsActivity extends AppCompatActivity {
         }
         else {
             Map<String, Object> groupMap = new HashMap<>();
+            Map<String, Object> map = new HashMap<>();
+
+
+            map.put(groupownerid,groupownerid);
+
+
             groupMap.put("groupname", groupname.getText().toString());
             groupMap.put("grouplocation", grouplocation.getText().toString());
             groupMap.put("groupcar", dropdown.getSelectedItem().toString());
+            groupMap.put("groupstatus", "Enter Status here");
             groupMap.put("ownerid", groupownerid);
-
+            groupsRef.child(postRandomName).updateChildren(map);
 
             groupsRef.child(postRandomName).updateChildren(groupMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), "Account Created", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Group Created", Toast.LENGTH_SHORT).show();
                         loadingbar.dismiss();
                         sendToNews();
                     } else {
@@ -144,7 +151,7 @@ public class CreateGroupsActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent,Gallery_Pick);
     }
 
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -211,6 +218,7 @@ public class CreateGroupsActivity extends AppCompatActivity {
         }
     }
 
+    */
 
     public void addMake(){
 

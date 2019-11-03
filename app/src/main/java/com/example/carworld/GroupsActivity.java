@@ -18,6 +18,10 @@ public class GroupsActivity extends AppCompatActivity {
         SendToCreateGroup();
     }
 
+    public void viewGroups(View view){SendToViewGroups();}
+
+    public void myGroups(View view){SendToMyGroups();}
+
     private void SendToCreateGroup() {
 
         Intent intent = new Intent (this,CreateGroupsActivity.class);
@@ -26,4 +30,22 @@ public class GroupsActivity extends AppCompatActivity {
             finish();
 
     }
+
+    private void SendToViewGroups() {
+
+        Intent intent = new Intent (this,ViewGroupsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+
+    }
+    private void SendToMyGroups() {
+
+        Intent intent = new Intent (this,MyGroupsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+
+    }
+
 }

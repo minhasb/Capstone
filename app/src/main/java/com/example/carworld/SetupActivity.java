@@ -72,6 +72,7 @@ public class SetupActivity extends AppCompatActivity {
         profilePic=findViewById(R.id.setup_group_pic);
         mAuth=FirebaseAuth.getInstance();
         userProfileImageReference=FirebaseStorage.getInstance().getReference().child("Profile Images");
+        //hide keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         currentUserId=mAuth.getCurrentUser().getUid();
         usersRef= FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);

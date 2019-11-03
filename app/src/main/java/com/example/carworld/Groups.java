@@ -4,97 +4,63 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Groups {
-    public String getName() {
-        return name;
-    }
+  private  String groupimage,groupcar,grouplocation,groupname,groupownerid,groupstatus;
+private ArrayList<User> members;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getGid() {
-        return gid;
-    }
-
-    public void setGid(String gid) {
-        this.gid = gid;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public String getCartype() {
-        return cartype;
-    }
-
-    public void setCartype(String cartype) {
-        this.cartype = cartype;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public ArrayList<String> getUsers() {
-        return users;
-    }
-
-    public void setUsers(ArrayList<String> users) {
-        this.users = users;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    private String name, gid, owner, cartype, location,description;
-    private ArrayList<String> users;
 
     public String getGroupimage() {
         return groupimage;
+    }
+
+    public String getGroupstatus() {
+        return groupstatus;
+    }
+
+    public void setGroupstatus(String groupstatus) {
+        this.groupstatus = groupstatus;
+    }
+
+    public ArrayList<User> getMembers() {
+        return members;
+    }
+
+    public void setMembers(ArrayList<User> members) {
+        this.members = members;
     }
 
     public void setGroupimage(String groupimage) {
         this.groupimage = groupimage;
     }
 
-    public String getProfileimage() {
-        return profileimage;
+    public String getGroupcar() {
+        return groupcar;
     }
 
-    public void setProfileimage(String profileimage) {
-        this.profileimage = profileimage;
+    public void setGroupcar(String groupcar) {
+        this.groupcar = groupcar;
     }
 
-    private String groupimage,profileimage;
-    private String time,date;
-
-    public String getTime() {
-        return time;
+    public String getGrouplocation() {
+        return grouplocation;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setGrouplocation(String grouplocation) {
+        this.grouplocation = grouplocation;
     }
 
-    public String getDate() {
-        return date;
+    public String getGroupname() {
+        return groupname;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
+    }
+
+    public String getGroupownerid() {
+        return groupownerid;
+    }
+
+    public void setGroupownerid(String groupownerid) {
+        this.groupownerid = groupownerid;
     }
 }
