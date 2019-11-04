@@ -16,8 +16,9 @@ Running firebase database and cloudstorage<br><br><br>
     
   <h3>SETTINGS:</h3> Able to modify your status, name, username and car <br>
  
-    <h3> CREATE GROUP:</h3> User able to create a group <br>
-  <h3> EDIT/Dete GROUP:</h3>If user have created a group user will be able to edit the fields for the group. These fields include the   Name, location and car type.User also able to delete the group<br>
+    
+  <h3>CREATE GROUP </h3> User able to create a group <br>
+  <h3>EDIT/Dete GROUP:</h3>If user have created a group user will be able to edit the fields for the group. These fields include the   Name, location and car type.User also able to delete the group<br>
   <h3> VIEW GROUPS:</h3> User able to view all the groups that were created by users <br>
   <h3> JOIN GROUP:</h3> User able to join a group <br>
    <h3> MY GROUPS:</h3> List of groups user has joined or created<br>
