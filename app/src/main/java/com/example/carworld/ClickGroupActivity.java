@@ -66,7 +66,7 @@ public class ClickGroupActivity extends AppCompatActivity {
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Groups").child(PostKey);
         dropdown = (Spinner)findViewById(R.id.setup_group_carname);
         dropdown.setEnabled(false);
-        PostImage=(ImageView) findViewById(R.id.click_post_image2);
+     //   PostImage=(ImageView) findViewById(R.id.click_post_image2);
         GroupLocation=(TextView) findViewById(R.id.click_group_location);
         GroupLocation.setEnabled(false);
         GroupStatus=(TextView) findViewById(R.id.click_group_status);
@@ -118,6 +118,7 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     String groupcar = dataSnapshot.child("groupcar").getValue().toString();
                     String groupname=dataSnapshot.child("groupname").getValue().toString();
                     String groupstatus=dataSnapshot.child("groupstatus").getValue().toString();
+                    //        image=dataSnapshot.child("groupimage").getValue().toString();
                     if(dataSnapshot.hasChild("ownerid"))
                     databaseUserID = dataSnapshot.child("ownerid").getValue().toString();
 
@@ -133,7 +134,7 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     dropdown.setSelection(getIndex(dropdown,groupcar));
 
 
-                  //  Picasso.get().load(image).into(PostImage);
+         //     Picasso.get().load(image).into(PostImage);
                     if (currentUserID.equals(databaseUserID)) {
 
                         DeletePostButton.setVisibility(View.VISIBLE);
@@ -304,7 +305,7 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
     */
     private void DeleteCurrentPost() {
         ClickPostRef.removeValue();
-        sendUsertoNews();
+        sendUserToGroups();
         Toast.makeText(this,"Group has been deleted",Toast.LENGTH_SHORT).show();
 
 

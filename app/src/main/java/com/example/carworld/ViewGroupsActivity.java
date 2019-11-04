@@ -147,8 +147,8 @@ String car;
 
                     car=groups.getGroupcar();
 
-                    // postsViewHolder.setProfileImage(getApplicationContext(),groups.getgr);
-                   // postsViewHolder.setGroupImage(getApplicationContext(),groups.getGroupimage());
+
+                postsViewHolder.setGroupImage(getApplicationContext(),groups.getGroupimage());
 
             postsViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -213,13 +213,12 @@ String car;
             TextView groupCar = (TextView) mView.findViewById(R.id.click_group_status);
             groupCar.setText(status);
         }
-/*
-        public void setPostImage (Context ctx1, String postImage){
+
+        public void setGroupImage (Context ctx1, String postImage){
             ImageView postImages = (ImageView) mView.findViewById(R.id.click_post_image2);
             Picasso.get().load(postImage).into(postImages);
         }
 
- */
     }
     private void checkUserExistence(){
 

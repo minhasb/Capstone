@@ -6,12 +6,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -142,10 +144,7 @@ public class MyGroupsActivity extends AppCompatActivity {
                 postsViewHolder.setLocation("Location: "+ groups.getGrouplocation());
                 postsViewHolder.setGroupCar("Group car:" + groups.getGroupcar());
                 postsViewHolder.setGroupstatus(groups.getGroupstatus());
-
-              //  car=groups.getGroupcar();
-                // postsViewHolder.setProfileImage(getApplicationContext(),groups.getgr);
-                // postsViewHolder.setGroupImage(getApplicationContext(),groups.getGroupimage());
+                postsViewHolder.setGroupImage(getApplicationContext(),groups.getGroupimage());
 
                 postsViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -209,13 +208,13 @@ public class MyGroupsActivity extends AppCompatActivity {
             TextView groupStatus = (TextView) mView.findViewById(R.id.click_group_status);
             groupStatus.setText(status);
         }
-/*
-        public void setPostImage (Context ctx1, String postImage){
+
+        public void setGroupImage (Context ctx1, String postImage){
             ImageView postImages = (ImageView) mView.findViewById(R.id.click_post_image2);
             Picasso.get().load(postImage).into(postImages);
         }
 
- */
+
     }
     private void checkUserExistence(){
 

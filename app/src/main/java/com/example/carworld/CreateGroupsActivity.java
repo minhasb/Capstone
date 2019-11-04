@@ -45,12 +45,14 @@ public class CreateGroupsActivity extends AppCompatActivity {
     private TextView groupname;
     private TextView grouplocation;
 
-    private ImageView profilePic;
+    private ImageView groupPic;
     final static int Gallery_Pick=1;
     FirebaseAuth mAuth;
+    private Uri ImageUri;
 
     private DatabaseReference groupsRef;
     private StorageReference groupImageReference;
+    private String downloadUrl;
     private Spinner dropdown;
     private ArrayList<String> carList;
     private ArrayList<String> makeList;
@@ -72,7 +74,7 @@ public class CreateGroupsActivity extends AppCompatActivity {
         //  modelSpinner= findViewById(R.id.car);
         dropdown = (Spinner)findViewById(R.id.setup_group_carname);
         loadingbar= new ProgressDialog(this);
-        profilePic=findViewById(R.id.setup_group_pic);
+        groupPic=findViewById(R.id.setup_group_pic);
         mAuth=FirebaseAuth.getInstance();
         groupownerid=mAuth.getCurrentUser().getUid();
         groupImageReference= FirebaseStorage.getInstance().getReference().child("Group Images");
@@ -87,7 +89,11 @@ public class CreateGroupsActivity extends AppCompatActivity {
 
 
     public void saveGroup(View view) {
+saveGroupInformation();
 
+    }
+
+    private void saveGroupInformation() {
         Calendar calFordDate = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
         String saveCurrentDate = currentDate.format(calFordDate.getTime());
@@ -96,7 +102,7 @@ public class CreateGroupsActivity extends AppCompatActivity {
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
         String saveCurrentTime = currentTime.format(calFordDate.getTime());
 
-      String postRandomName = groupownerid+ saveCurrentDate + saveCurrentTime;
+        String postRandomName = groupownerid+ saveCurrentDate + saveCurrentTime;
 
         if(groupname.getText().toString().isEmpty()||grouplocation.getText().toString().isEmpty())
         {
@@ -115,6 +121,7 @@ public class CreateGroupsActivity extends AppCompatActivity {
             groupMap.put("groupcar", dropdown.getSelectedItem().toString());
             groupMap.put("groupstatus", "Enter Status here");
             groupMap.put("ownerid", groupownerid);
+            groupMap.put("groupimage", downloadUrl);
             groupsRef.child(postRandomName).updateChildren(map);
 
             groupsRef.child(postRandomName).updateChildren(groupMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -135,6 +142,7 @@ public class CreateGroupsActivity extends AppCompatActivity {
             });
         }
     }
+
     private void sendToNews() {
 
 
@@ -151,74 +159,22 @@ public class CreateGroupsActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent,Gallery_Pick);
     }
 
-/*
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode==Gallery_Pick && resultCode==RESULT_OK && data!=null)
         {
-            Uri ImageUri = data.getData();
-
-            CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1, 1)
-                    .start(this);
+            ImageUri = data.getData();
+            groupPic.setImageURI(ImageUri);
         }
 
-        if(requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
-        {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-
-            if(resultCode == RESULT_OK)
-            {
-                loadingbar.setTitle("Profile Image");
-                loadingbar.setMessage("Please wait, while we updating your profile image...");
-                loadingbar.show();
-                loadingbar.setCanceledOnTouchOutside(true);
-
-                Uri resultUri = result.getUri();
-
-                StorageReference filePath = groupImageReference.child(currentUserId + ".jpg");
-
-                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull final Task<UploadTask.TaskSnapshot> task)
-                    {
-                        if(task.isSuccessful())
-                        {
-                            Toast.makeText(com.example.carworld.CreateGroupsActivity.this, "Profile Image stored successfully to Firebase storage...", Toast.LENGTH_SHORT).show();
-                            StorageReference filePath = groupImageReference.child(currentUserId + ".jpg");
-
-                            filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-
-                                    groupsRef.child("groupimage").setValue(uri.toString());
-
-                                    Picasso.get().load(uri.toString()).into((ImageView)findViewById(R.id.setup_group_pic));
-
-                                    Toast.makeText(com.example.carworld.CreateGroupsActivity.this, "Group Image stored to Firebase Database Successfully...", Toast.LENGTH_SHORT).show();
-                                    loadingbar.dismiss();
-                                }
-
-
-                            });
-
-                        }
-                    }
-                });
-            }
-            else
-            {
-                Toast.makeText(this, "Error Occured: Image can not be cropped. Try Again.", Toast.LENGTH_SHORT).show();
-                loadingbar.dismiss();
-            }
-        }
+        StoringImageToFirebaseStorage();
     }
 
-    */
+
 
     public void addMake(){
 
@@ -277,6 +233,68 @@ public class CreateGroupsActivity extends AppCompatActivity {
 
         return list;
     }
+
+
+
+
+    private void StoringImageToFirebaseStorage()
+    {
+
+        Calendar calFordDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
+        String saveCurrentDate = currentDate.format(calFordDate.getTime());
+
+        Calendar calFordTime = Calendar.getInstance();
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+        String saveCurrentTime = currentTime.format(calFordDate.getTime());
+
+        final String postRandomName = groupownerid+ saveCurrentDate + saveCurrentTime;
+
+        StorageReference filePath = groupImageReference.child("Group Images").child(ImageUri.getLastPathSegment() + postRandomName + ".jpg");
+
+        filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task)
+            {
+                if(task.isSuccessful())
+                {
+                    StorageReference filePath = groupImageReference.child("Group Images").child(ImageUri.getLastPathSegment() + postRandomName + ".jpg");
+                    filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Toast.makeText(CreateGroupsActivity.this, "image uploaded successfully to Storage...", Toast.LENGTH_SHORT).show();
+                            downloadUrl=uri.toString();
+                            saveGroupInformation();
+                        }
+                    });
+
+
+                }
+                else
+                {
+                    String message = task.getException().getMessage();
+                    Toast.makeText(CreateGroupsActivity.this, "Error occured: " + message, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+
+    private void OpenGallery() {
+        Intent galleryIntent = new Intent();
+        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, Gallery_Pick);
+    }
+
+    public void goBack(View view){
+
+        Intent setup = new Intent(this,GroupsActivity.class);
+        setup.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(setup);
+        finish();
+    }
+
 
 }
 

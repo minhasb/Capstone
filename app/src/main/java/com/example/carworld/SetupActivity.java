@@ -72,7 +72,6 @@ public class SetupActivity extends AppCompatActivity {
         profilePic=findViewById(R.id.setup_group_pic);
         mAuth=FirebaseAuth.getInstance();
         userProfileImageReference=FirebaseStorage.getInstance().getReference().child("Profile Images");
-        //hide keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         currentUserId=mAuth.getCurrentUser().getUid();
         usersRef= FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
@@ -175,15 +174,28 @@ else {
                                 @Override
                                 public void onSuccess(Uri uri) {
 
-                                    usersRef.child("profileimage").setValue(uri.toString());
+                                    usersRef.child("profileimage").setValue(uri.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task)
+                                        {
+                                            if(task.isSuccessful())
+                                            {
+                                                Intent selfIntent = new Intent(SetupActivity.this, SetupActivity.class);
+                                                startActivity(selfIntent);
 
-                                    Picasso.get().load(uri.toString()).into((ImageView)findViewById(R.id.setup_group_pic));
-                                    Intent selfIntent = new Intent(SetupActivity.this, SetupActivity.class);
-                                    startActivity(selfIntent);
-
-                                    Toast.makeText(SetupActivity.this, "Profile Image stored to Firebase Database Successfully...", Toast.LENGTH_SHORT).show();
-                                    loadingbar.dismiss();
+                                                Toast.makeText(SetupActivity.this, "Profile Image stored to Firebase Database Successfully...", Toast.LENGTH_SHORT).show();
+                                                loadingbar.dismiss();
+                                            }
+                                            else
+                                            {
+                                                String message = task.getException().getMessage();
+                                                Toast.makeText(SetupActivity.this, "Error Occured: " + message, Toast.LENGTH_SHORT).show();
+                                                loadingbar.dismiss();
+                                            }
+                                        }
+                                    });
                                 }
+
 
 
                             });

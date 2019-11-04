@@ -14,14 +14,15 @@
         android:layout_width="322dp"
         android:layout_height="80dp"
         android:background="#9AD2F1"
-        android:textSize="24sp"
+        android:onClick="createGroup"
         android:text="Create Group"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.573"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.187"
-        android:onClick="createGroup"/>
+        app:layout_constraintVertical_bias="0.187" />
 
     <Button
         android:id="@+id/searchGroups"
