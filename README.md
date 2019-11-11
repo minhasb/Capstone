@@ -19,9 +19,11 @@ Running firebase database and cloudstorage<br><br><br>
     
   <h3>CREATE GROUP </h3> User able to create a group <br>
   <h3>EDIT/Dete GROUP:</h3>If user have created a group user will be able to edit the fields for the group. These fields include the   Name, location and car type.User also able to delete the group<br>
+  <h3> MANAGE GROUP MEMBERS:</h3> Owner of the group able to delete members of the group if needed.
   <h3> VIEW GROUPS:</h3> User able to view all the groups that were created by users <br>
   <h3> JOIN GROUP:</h3> User able to join a group <br>
    <h3> MY GROUPS:</h3> List of groups user has joined or created<br>
+   
    
   
    <h3>ADD/EDIT/DELETE POST:</h3>User able to add a post with image and description. Users who added post able to edit and delete it<br
