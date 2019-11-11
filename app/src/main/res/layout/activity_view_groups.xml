@@ -17,18 +17,58 @@
             layout="@layout/toolbar">
 
         </include>
+        <EditText
+            android:id="@+id/searchGroupsText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/toolbar"
+></EditText>
+
+        <Button
+            android:id="@+id/search"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:layout_below="@id/searchGroupsText"
+            android:layout_marginBottom="10dp"
+            android:background="#9AD2F1"
+
+            android:text="Search By Name"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/click_post_description" />
+        <Button
+            android:id="@+id/mycargroups"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:layout_below="@id/search"
+            android:layout_marginBottom="50dp"
+            android:background="#9AD2F1"
+            android:text="View My Car Related Groups"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/click_post_description" />
 
         <FrameLayout
             android:id="@+id/main_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar">
+            android:layout_below="@+id/mycargroups">
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/all_users_post_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"/>
 
 
 

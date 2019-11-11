@@ -10,10 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +49,10 @@ public class ViewGroupsActivity extends AppCompatActivity {
     private RecyclerView postList;
     private CircleImageView NavProfileImage;
     private TextView NavProfileUserName;
+    private EditText SearchGroups;
     private String currentUserID;
+    private Button searchbutton,searchmycargroupsBtn;
+    private String car;
 
 
 
@@ -57,8 +64,45 @@ public class ViewGroupsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_groups);
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
+        UsersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+
+                car= dataSnapshot.child(mAuth.getCurrentUser().getUid()).child("car").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         mAuth=FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
+        SearchGroups=findViewById(R.id.searchGroupsText);
+        searchbutton=findViewById(R.id.search);
+        searchbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String text=SearchGroups.getText().toString();
+                query=FirebaseDatabase.getInstance().getReference().child("Groups").orderByChild("groupname").startAt(text).endAt(text+"\uf8ff");
+                DisplayAllUsersPosts();
+            }
+        });
+
+        searchmycargroupsBtn=findViewById(R.id.mycargroups);
+        searchmycargroupsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+             query=  FirebaseDatabase.getInstance().getReference().child("Groups").orderByChild("groupcar").equalTo(car);
+                Toast.makeText(ViewGroupsActivity.this, "user car=" +car, Toast.LENGTH_SHORT).show();
+             DisplayAllUsersPosts();
+            }
+        });
+
+
 
         GroupsRef = FirebaseDatabase.getInstance().getReference().child("Groups");
 
