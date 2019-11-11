@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -21,9 +22,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -76,6 +80,22 @@ public class SetupActivity extends AppCompatActivity {
         currentUserId=mAuth.getCurrentUser().getUid();
         usersRef= FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
 
+
+        usersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("profileimage").exists())
+                {
+
+                    Picasso.get().load(dataSnapshot.child("profileimage").getValue().toString()).into(profilePic);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         addMake();
 
 
@@ -158,6 +178,7 @@ else {
                 loadingbar.setCanceledOnTouchOutside(true);
 
                 Uri resultUri = result.getUri();
+                profilePic.setImageURI(resultUri);
 
                 StorageReference filePath = userProfileImageReference.child(currentUserId + ".jpg");
 
@@ -181,7 +202,7 @@ else {
                                             if(task.isSuccessful())
                                             {
                                                 Intent selfIntent = new Intent(SetupActivity.this, SetupActivity.class);
-                                                startActivity(selfIntent);
+                                               startActivity(selfIntent);
 
                                                 Toast.makeText(SetupActivity.this, "Profile Image stored to Firebase Database Successfully...", Toast.LENGTH_SHORT).show();
                                                 loadingbar.dismiss();
@@ -203,7 +224,7 @@ else {
                         }
                     }
                 });
-            }
+            } 
             else
             {
                 Toast.makeText(this, "Error Occured: Image can not be cropped. Try Again.", Toast.LENGTH_SHORT).show();

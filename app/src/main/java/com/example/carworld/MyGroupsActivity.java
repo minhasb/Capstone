@@ -2,6 +2,7 @@ package com.example.carworld;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -76,7 +77,11 @@ public class MyGroupsActivity extends AppCompatActivity {
         NavProfileImage = (CircleImageView) navView.findViewById(R.id.header_image);
         NavProfileUserName = (TextView) navView.findViewById(R.id.header_username);
 
-
+//Toolbar
+        //Toolbar
+        Toolbar toolbar =  findViewById(R.id.toolbar);
+        toolbar.setTitle("My Groups");
+        setSupportActionBar(toolbar);
 
         postList = (RecyclerView) findViewById(R.id.all_users_post_list);
         postList.setHasFixedSize(true);

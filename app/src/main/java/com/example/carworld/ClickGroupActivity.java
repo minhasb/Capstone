@@ -42,8 +42,8 @@ public class ClickGroupActivity extends AppCompatActivity {
 
 
     private ImageView PostImage;
-    private TextView GroupLocation,GroupName,GroupStatus;
-    private Button DeletePostButton,EditPostButton,DoneEditButton,JoinGroupButton,LeaveGroupButton;
+    private TextView GroupLocation,GroupName,GroupStatus,CarName;
+    private Button DeletePostButton,EditPostButton,DoneEditButton,JoinGroupButton,LeaveGroupButton,ManageMembers;
     private String PostKey,currentUserID,databaseUserID,image;
     private DatabaseReference ClickPostRef,UserRef;
     private FirebaseAuth mAuth;
@@ -64,8 +64,12 @@ public class ClickGroupActivity extends AppCompatActivity {
         currentUserID=mAuth.getCurrentUser().getUid();
         UserRef =FirebaseDatabase.getInstance().getReference().child("Users");
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Groups").child(PostKey);
-        dropdown = (Spinner)findViewById(R.id.setup_group_carname);
+        dropdown = (Spinner)findViewById(R.id.click_group_carname);
         dropdown.setEnabled(false);
+        dropdown.setVisibility(View.INVISIBLE);
+
+        CarName=(TextView)findViewById(R.id.click_group_carnametext);
+        CarName.setEnabled(false);
      //   PostImage=(ImageView) findViewById(R.id.click_post_image2);
         GroupLocation=(TextView) findViewById(R.id.click_group_location);
         GroupLocation.setEnabled(false);
@@ -77,9 +81,14 @@ public class ClickGroupActivity extends AppCompatActivity {
         DeletePostButton=(Button)findViewById(R.id.delete_post_btn2);
         EditPostButton=(Button)findViewById(R.id.edit_post_btn2);
       DoneEditButton=(Button)findViewById(R.id.edit_done_button);
+
+      ManageMembers=(Button)findViewById(R.id.manage_members);
+      ManageMembers.setVisibility(View.INVISIBLE);
       JoinGroupButton=(Button)findViewById(R.id.join_group_button);
         LeaveGroupButton=(Button)findViewById(R.id.leave_group_button);
         LeaveGroupButton.setVisibility(View.INVISIBLE);
+
+
         addMake();
 
 
@@ -127,6 +136,7 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
                    GroupLocation.setText(location);
                    GroupName.setText(groupname);
+                   CarName.setText(groupcar);
 
                     ArrayAdapter carAdap= (ArrayAdapter)dropdown.getAdapter();
                     dropdown.setSelection(carAdap.getPosition(groupcar));
@@ -146,40 +156,58 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     EditPostButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
+                            ManageMembers.setVisibility(View.VISIBLE);
+                            DeletePostButton.setVisibility(View.INVISIBLE);
                             EditPostButton.setVisibility(View.INVISIBLE);
                             DoneEditButton.setVisibility(View.VISIBLE);
+                            dropdown.setVisibility(View.VISIBLE);
+                            CarName.setVisibility(View.INVISIBLE);
                             //EditCurrentPost(description);
                             GroupLocation.setEnabled(true);
                             GroupStatus.setEnabled(true);
                             dropdown.setEnabled(true);
                             GroupName.setEnabled(true);
+                            CarName.setEnabled(true);
                         }
                     });
 
                     DoneEditButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            dropdown.setVisibility(View.INVISIBLE);
+                            DeletePostButton.setVisibility(View.VISIBLE);
+                            ManageMembers.setVisibility(View.INVISIBLE);
 
                             GroupName=(TextView) findViewById(R.id.click_group_name);
                             GroupLocation=(TextView) findViewById(R.id.click_group_location);
                             GroupStatus=(TextView) findViewById(R.id.click_group_status);
+                            CarName=(TextView)findViewById(R.id.click_group_carnametext);
                             ClickPostRef.child("groupname").setValue(GroupName.getText().toString());
                             ClickPostRef.child("grouplocation").setValue(GroupLocation.getText().toString());
                             ClickPostRef.child("groupstatus").setValue(GroupStatus.getText().toString());
+                            ClickPostRef.child("groupcar").setValue(CarName.getText().toString());
 
                             if(dropdown.getSelectedItem()!=null)
                             ClickPostRef.child("groupcar").setValue(dropdown.getSelectedItem().toString());
 
                             EditPostButton.setVisibility(View.VISIBLE);
                             DoneEditButton.setVisibility(View.INVISIBLE);
+                            CarName.setVisibility(View.VISIBLE);
 
                         GroupLocation.setEnabled(false);
                         GroupStatus.setEnabled(false);
                         GroupName.setEnabled(false);
                         dropdown.setEnabled(false);
+                            CarName.setEnabled(false);
 
 
+
+                        }
+                    });
+                    ManageMembers.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            sendUserToMembers();
                         }
                     });
 
@@ -222,6 +250,8 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                     });
 
 
+
+
                                 }
 
                                 @Override
@@ -244,6 +274,8 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
                                     Toast.makeText(ClickGroupActivity.this, "Left Group ",Toast.LENGTH_SHORT);
                                     sendUserToGroups();
+                                    sendUserToMyGroups();
+
                                 }
                             });
 
@@ -271,38 +303,39 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
     }
 
 
-/*
-    private void EditCurrentPost(String description) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ClickGroupActivity.this);
-        builder.setTitle("Edit Post");
+
+    /*
+        private void EditCurrentPost(String description) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ClickGroupActivity.this);
+            builder.setTitle("Edit Post");
 
 
-        final EditText inputField= new EditText(ClickGroupActivity.this);
-        inputField.setText(description);
-        builder.setView(inputField);
+            final EditText inputField= new EditText(ClickGroupActivity.this);
+            inputField.setText(description);
+            builder.setView(inputField);
 
 
-        builder.setPositiveButton("Update Button", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                ClickPostRef.child("grouplocation").setValue(inputField.getText().toString());
-                Toast.makeText(ClickGroupActivity.this, "Post Updated Successfully.. ",Toast.LENGTH_SHORT);
+            builder.setPositiveButton("Update Button", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    ClickPostRef.child("grouplocation").setValue(inputField.getText().toString());
+                    Toast.makeText(ClickGroupActivity.this, "Post Updated Successfully.. ",Toast.LENGTH_SHORT);
 
-            }
-        });
+                }
+            });
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-        Dialog dialog = builder.create();
-        dialog.show();
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.background_light);
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+            Dialog dialog = builder.create();
+            dialog.show();
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.background_light);
 
-    }
-    */
+        }
+        */
     private void DeleteCurrentPost() {
         ClickPostRef.removeValue();
         sendUserToGroups();
@@ -324,6 +357,23 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
         startActivity(intent);
         finish();
     }
+    private void sendUserToMembers() {
+        Intent intent = new Intent (this,ManageMembersActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("PostKey",PostKey);
+        // clickPostIntent.putExtra("Car",car);
+
+
+        startActivity(intent);
+        finish();
+    }
+    private void sendUserToMyGroups() {
+        Intent intent = new Intent (this,MyGroupsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
 
     public void addMake(){
 
@@ -351,7 +401,7 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 String model=full[2].substring(2,full[2].length()-2);
 
                 makeList.add(make + " " + model);
-                System.out.println(model);
+
                 // read next line
                 line = reader.readLine();
             }

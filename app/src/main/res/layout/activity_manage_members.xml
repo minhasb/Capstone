@@ -4,63 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#03A9F4"
-    tools:context=".GroupsActivity">
+    tools:context=".ManageMembersActivity"
+    android:background="#03A9F4">
     <include android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar">
 
+    </include>
 
     <Button
-        android:id="@+id/createGroup"
-
+        android:id="@+id/goback"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="322dp"
         android:layout_height="80dp"
+        android:layout_marginBottom="80dp"
         android:background="#9AD2F1"
-        android:onClick="createGroup"
-        android:text="Create Group"
-        android:textSize="24sp"
+        android:text="Go Back"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.216" />
+        app:layout_constraintTop_toBottomOf="@+id/click_post_description" />
 
     <Button
-        android:id="@+id/searchGroups"
+        android:id="@+id/deleteuser"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
         android:layout_width="322dp"
         android:layout_height="80dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginBottom="216dp"
         android:background="#9AD2F1"
-        android:onClick="viewGroups"
-        android:text="View Groups"
-        android:textSize="24sp"
+        android:text="Remove"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.403" />
+        app:layout_constraintTop_toBottomOf="@+id/click_post_description" />
 
-    <Button
-        android:id="@+id/mygroups"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
-        android:layout_width="322dp"
-        android:layout_height="80dp"
-        android:background="#9AD2F1"
-        android:textSize="24sp"
-        android:layout_marginTop="250dp"
-        android:text="My Groups"
-        android:onClick="myGroups"
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:id="@+id/member_names"
+        android:layout_width="324dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Car"
+        android:inputType="textMultiLine"
+        android:spinnerMode="dropdown"
+        android:textColor="#FFFFFF"
+        android:textSize="28dp"
+        app:hintText="Select a user"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.403" />
-
+        app:layout_constraintVertical_bias="0.375" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.carworld;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -85,6 +86,11 @@ public class ViewGroupsActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         postList.setLayoutManager(linearLayoutManager);
         DisplayAllUsersPosts();
+
+        //Toolbar
+        Toolbar toolbar =  findViewById(R.id.toolbar);
+        toolbar.setTitle("All Groups");
+        setSupportActionBar(toolbar);
 
 
         UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {

@@ -53,9 +53,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-              username.setText(dataSnapshot.child(current_user_id).child("username").getValue().toString());
-                userfullname.setText(dataSnapshot.child(current_user_id).child("fullname").getValue().toString());
-                usercarname.setText(dataSnapshot.child(current_user_id).child("car").getValue().toString());
+              username.setText("username: "+ dataSnapshot.child(current_user_id).child("username").getValue().toString());
+                userfullname.setText("fullname: "+ dataSnapshot.child(current_user_id).child("fullname").getValue().toString());
+                usercarname.setText("car: " + dataSnapshot.child(current_user_id).child("car").getValue().toString());
             }
 
             @Override

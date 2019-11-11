@@ -62,11 +62,11 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-                username.setText(dataSnapshot.child(current_user_id).child("username").getValue().toString());
-                userfullname.setText(dataSnapshot.child(current_user_id).child("fullname").getValue().toString());
-                userstatus.setText(dataSnapshot.child(current_user_id).child("status").getValue().toString());
-                usercarname.setText(dataSnapshot.child(current_user_id).child("car").getValue().toString());
-                userlocation.setText(dataSnapshot.child(current_user_id).child("location").getValue().toString());
+                username.setText("username: " +dataSnapshot.child(current_user_id).child("username").getValue().toString());
+                userfullname.setText("Name: " + dataSnapshot.child(current_user_id).child("fullname").getValue().toString());
+                userstatus.setText("Status: "+dataSnapshot.child(current_user_id).child("status").getValue().toString());
+                usercarname.setText("Car : "+ dataSnapshot.child(current_user_id).child("car").getValue().toString());
+                userlocation.setText("Location :"+ dataSnapshot.child(current_user_id).child("location").getValue().toString());
 
                 Picasso.get().load(dataSnapshot.child(current_user_id).child("profileimage").getValue().toString()).into(userProfileImage);
             }

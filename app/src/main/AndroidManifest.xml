@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MyGroupsActivity"></activity>
+        <activity android:name=".ManageMembersActivity"></activity>
+        <activity android:name=".MyGroupsActivity" />
         <activity android:name=".ClickGroupActivity" />
         <activity android:name=".ViewGroupsActivity" />
         <activity android:name=".CreateGroupsActivity" />

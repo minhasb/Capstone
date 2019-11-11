@@ -21,9 +21,21 @@
         app:layout_constraintVertical_bias="0.055"
 
         />
+    <EditText
+        android:id="@+id/click_group_carnametext"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Group Location"
+        android:textSize="28dp"
+        app:layout_constraintBottom_toTopOf="@+id/click_group_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/click_group_name">
+
+    </EditText>
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-        android:id="@+id/setup_group_carname"
+        android:id="@+id/click_group_carname"
         android:layout_width="410dp"
         android:layout_height="59dp"
         android:ems="10"
@@ -133,6 +145,21 @@
         android:layout_marginBottom="16dp"
         android:background="#9AD2F1"
         android:text="Delete "
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.617"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_post_btn2"
+        app:layout_constraintVertical_bias="0.78" />
+    <Button
+        android:id="@+id/manage_members"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+        android:layout_width="322dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="16dp"
+        android:background="#9AD2F1"
+        android:text="Manage Members "
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

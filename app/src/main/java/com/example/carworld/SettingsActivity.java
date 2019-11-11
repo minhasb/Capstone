@@ -37,7 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SettingsActivity extends AppCompatActivity {
     private EditText username;
-    private EditText userprofilename,userstatus;
+    private EditText userprofilename,userstatus,userlocation;
     private Button UpdateAccountSettingsButton;
 
     private ImageView userProfileImage;
@@ -60,6 +60,7 @@ public class SettingsActivity extends AppCompatActivity {
         username= (EditText) findViewById(R.id.settings_username);
         userprofilename= (EditText) findViewById(R.id.settings_fullname);
         userstatus=(EditText)findViewById(R.id.settings_status);
+        userlocation=(EditText)findViewById(R.id.settings_userlocation);
         userProfileImage=(CircleImageView) findViewById(R.id.settings_profile_image);
 
         addCars();
@@ -79,7 +80,7 @@ Settingsuserref.addValueEventListener(new ValueEventListener() {
            String myProfileName = dataSnapshot.child("fullname").getValue().toString();
            String myProfileCar = dataSnapshot.child("car").getValue().toString();
            String myProfileStatus = dataSnapshot.child("status").getValue().toString();
-           String myProfileCountry= dataSnapshot.child("location").getValue().toString();
+           String myProfilelocation= dataSnapshot.child("location").getValue().toString();
            String myProfiledob = dataSnapshot.child("dob").getValue().toString();
 
            if(dataSnapshot.child("profileimage").exists()) {
@@ -91,6 +92,8 @@ Settingsuserref.addValueEventListener(new ValueEventListener() {
            username.setText(myUserName);
            userprofilename.setText(myProfileName);
            userstatus.setText(myProfileStatus);
+           userlocation.setText(myProfilelocation);
+
            //setting value for car dropdown
            ArrayAdapter carAdap= (ArrayAdapter)dropdown.getAdapter();
            dropdown.setSelection(carAdap.getPosition(myProfileCar));
@@ -121,6 +124,7 @@ UpdateAccountSettingsButton.setOnClickListener(new View.OnClickListener() {
         String profilename=userprofilename.getText().toString();
         String carname= dropdown.getSelectedItem().toString();
         String status = userstatus.getText().toString();
+        String location =userlocation.getText().toString();
 
 
         if(TextUtils.isEmpty(name))
@@ -141,10 +145,13 @@ UpdateAccountSettingsButton.setOnClickListener(new View.OnClickListener() {
                         {
                             Toast.makeText(this,"Please enter status",Toast.LENGTH_SHORT);
                         }
-
+        else if (TextUtils.isEmpty(location))
+        {
+            Toast.makeText(this,"Please enter location",Toast.LENGTH_SHORT);
+        }
                     else {
 
-                        UpdateAccountInfo(name,profilename,carname,status);
+                        UpdateAccountInfo(name,profilename,carname,status,location);
 
         }
 
@@ -161,7 +168,7 @@ UpdateAccountSettingsButton.setOnClickListener(new View.OnClickListener() {
 
     }
 
-    private void UpdateAccountInfo(String name, String profilename, String carname, String status) {
+    private void UpdateAccountInfo(String name, String profilename, String carname, String status,String location) {
 
         HashMap userMap= new HashMap<>();
 
@@ -170,7 +177,7 @@ UpdateAccountSettingsButton.setOnClickListener(new View.OnClickListener() {
         userMap.put("car", carname);
        // userMap.put("dob", "Date here");
         userMap.put("status", status);
-       // userMap.put("country", "Canada");
+       userMap.put("location", location);
 
 
         Settingsuserref.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
