@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ClickUserActivity"
+    android:background="@color/colorProfile">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/my_profile_pic"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/profile">
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+
+
+
+            <TextView
+                android:id="@+id/my_profile_full_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Profile Name"
+                android:layout_below="@id/my_profile_pic"
+                android:layout_marginTop="5dp"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="20dp"
+                android:textStyle="bold"
+
+                >
+
+            </TextView>
+            <TextView
+                android:id="@+id/my_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="username"
+                android:layout_below="@id/my_profile_full_name"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18dp"
+                >
+            </TextView>
+            <TextView
+                android:id="@+id/my_profile_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="status"
+                android:layout_below="@id/my_username"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18dp"
+
+
+                ></TextView>
+            <TextView
+                android:id="@+id/my_car"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="car"
+                android:layout_below="@id/my_profile_status"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18dp"
+
+
+                ></TextView>
+            <TextView
+                android:id="@+id/my_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:layout_below="@id/my_car"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="false"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18dp"
+
+
+                ></TextView>
+
+            <Button
+                android:id="@+id/message"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+                android:layout_width="326dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_location"
+                android:layout_marginLeft="55dp"
+                android:layout_marginTop="30dp"
+                android:background="#9AD2F1"
+                android:onClick="sendMessage"
+                android:text="CHAT"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.471"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.926" />
+
+
+            <Button
+                android:id="@+id/delete"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+                android:layout_width="326dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/message"
+                android:layout_marginLeft="55dp"
+                android:layout_marginTop="30dp"
+                android:background="#9AD2F1"
+                android:onClick="deleteUser"
+                android:text="DELETE USER"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.471"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.926" />
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

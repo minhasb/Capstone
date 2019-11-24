@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SendMessageActivity">
+    <include android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messages_list_users"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_below="@id/toolbar"/>
+
+<LinearLayout
+    android:id="@+id/myLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentStart="true"
+>
+    <EditText
+        android:id="@+id/messageText"
+        android:layout_marginTop="25dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="Write your message here"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.845" />
+
+   <androidx.appcompat.widget.AppCompatImageButton
+       android:layout_width="50dp"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="20dp"
+
+       android:src="@drawable/ic_send_message"
+       android:onClick="sendMessage">
+
+   </androidx.appcompat.widget.AppCompatImageButton>
+
+
+</LinearLayout>
+
+
+</RelativeLayout>

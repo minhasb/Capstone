@@ -39,15 +39,14 @@ public class MainActivity extends AppCompatActivity {
         loadingbar= new ProgressDialog(this);
         userref= FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth=FirebaseAuth.getInstance();
-    
+    addOwnersToMemebrs();
 
     }
 
+    private void addOwnersToMemebrs() {
 
-
-
-
-
+        
+    }
 
 
     public void logincheck(View view) {

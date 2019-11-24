@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -89,7 +90,7 @@ public class ViewGroupsActivity extends AppCompatActivity {
                 DisplayAllUsersPosts();
             }
         });
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         searchmycargroupsBtn=findViewById(R.id.mycargroups);
         searchmycargroupsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,17 +185,22 @@ public class ViewGroupsActivity extends AppCompatActivity {
         FirebaseRecyclerOptions<Groups> options = new FirebaseRecyclerOptions.Builder<Groups>().setQuery(query, Groups.class).build();
         FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Groups, ViewGroupsActivity.PostsViewHolder>(options) {
 String car;
+String ownerid;
 
             @Override
             protected void onBindViewHolder(@NonNull ViewGroupsActivity.PostsViewHolder postsViewHolder, int position, @NonNull Groups groups) {
 
                 final String PostKey = getRef(position).getKey();
 
+
+
                     postsViewHolder.setFullname(groups.getGroupname());
                     postsViewHolder.setLocation("Location: "+ groups.getGrouplocation());
                     postsViewHolder.setGroupCar("Group car:" + groups.getGroupcar());
                     postsViewHolder.setGroupStatus(groups.getGroupstatus());
 
+                ownerid =groups.getOwnerid();
+                System.out.println("Group owner id" +ownerid);
                     car=groups.getGroupcar();
 
 
@@ -205,6 +211,7 @@ String car;
                     public void onClick(View view) {
                         Intent clickPostIntent = new Intent (ViewGroupsActivity.this
                                 , ClickGroupActivity.class);
+                        clickPostIntent.putExtra("groupownerid",ownerid);
                         clickPostIntent.putExtra("PostKey",PostKey);
                         clickPostIntent.putExtra("Car",car);
 
@@ -232,6 +239,20 @@ String car;
         super.onStart();
         checkUserExistence();
 
+    }
+
+    public void createGroup(View view) {
+        Intent intent = new Intent (this,CreateGroupsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    public void myGroups(View view) {
+        Intent intent = new Intent (this,MyGroupsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder {
@@ -353,6 +374,14 @@ String car;
             case R.id.nav_groups:
 
                 Intent intent = new Intent(this, GroupsActivity.class);
+                startActivity(intent);
+                break;
+        }
+        switch (item.getItemId())
+        {
+            case R.id.nav_all_posts:
+
+                Intent intent = new Intent(this, NewsActivity.class);
                 startActivity(intent);
                 break;
         }

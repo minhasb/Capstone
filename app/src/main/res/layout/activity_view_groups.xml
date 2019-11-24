@@ -60,20 +60,47 @@
         <FrameLayout
             android:id="@+id/main_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="355dp"
             android:layout_below="@+id/mycargroups">
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/all_users_post_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"/>
-
-
+                android:layout_width="400dp"
+                android:layout_height="443dp"
+                android:layout_marginTop="10dp" />
 
 
         </FrameLayout>
+        <Button
+            android:id="@+id/searchGroupsNav"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+            android:layout_width="132dp"
+            android:layout_height="72dp"
+            android:layout_marginLeft="50dp"
+            android:text="My Groups"
+            android:textSize="15dp"
+            android:layout_below="@id/main_container"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="myGroups"
+            ></Button>
+
+        <Button
+            android:id="@+id/createGroupNav"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+            android:textSize="15dp"
+            android:layout_width="132dp"
+            android:layout_height="72dp"
+            android:layout_marginLeft="200dp"
+            android:text="Create a Group"
+            android:layout_below="@id/main_container"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="createGroup"
+            ></Button>
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     android:background="#03A9F4"
     tools:context=".ClickGroupActivity">
+    <include android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
 
     <EditText
         android:id="@+id/click_group_name"
@@ -15,22 +18,25 @@
         android:textSize="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.055"
+        app:layout_constraintVertical_bias="0.124"
 
         />
+
     <EditText
         android:id="@+id/click_group_carnametext"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Group Location"
+        android:text="Car name"
         android:textSize="28dp"
         app:layout_constraintBottom_toTopOf="@+id/click_group_location"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/click_group_name">
+        app:layout_constraintTop_toBottomOf="@+id/click_group_name"
+        app:layout_constraintVertical_bias="0.28">
 
     </EditText>
 
@@ -48,8 +54,10 @@
         app:hintText="Select a car"
         app:layout_constraintBottom_toTopOf="@+id/click_group_location"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/click_group_name">
+        app:layout_constraintTop_toBottomOf="@+id/click_group_name"
+        app:layout_constraintVertical_bias="0.28">
 
     </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
 
@@ -64,13 +72,13 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/click_group_name"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.214" />
 
     <EditText
         android:id="@+id/click_group_status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
+        android:layout_width="395dp"
+        android:layout_height="95dp"
+        android:layout_marginTop="96dp"
         android:lines="4"
         android:maxLines="4"
         android:padding="3dp"
@@ -84,87 +92,88 @@
     <Button
         android:id="@+id/edit_post_btn2"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
-        android:layout_width="322dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="248dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="232dp"
         android:background="#9AD2F1"
         android:text="Edit "
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.617"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/click_group_location" />
+        app:layout_constraintTop_toBottomOf="@+id/click_group_location"/>
 
     <Button
         android:id="@+id/edit_done_button"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
-        android:layout_width="322dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="244dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="224dp"
         android:background="#9AD2F1"
         android:text="Done "
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.617"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/click_group_location" />
 
     <Button
         android:id="@+id/join_group_button"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
-        android:layout_width="322dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="244dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="224dp"
         android:background="#9AD2F1"
         android:text="Join "
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.617"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/click_group_location" />
+
+    <Button
+        android:id="@+id/group_members"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="164dp"
+        android:background="#9AD2F1"
+        android:onClick="showMembers"
+        android:text="Members"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/click_group_location" />
 
     <Button
         android:id="@+id/leave_group_button"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
-        android:layout_width="322dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="244dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="240dp"
         android:background="#9AD2F1"
         android:text="Leave"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.617"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/click_group_location" />
 
     <Button
         android:id="@+id/delete_post_btn2"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
-        android:layout_width="322dp"
-        android:layout_height="80dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="16dp"
         android:background="#9AD2F1"
         android:text="Delete "
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.617"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_post_btn2"
-        app:layout_constraintVertical_bias="0.78" />
-    <Button
-        android:id="@+id/manage_members"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
-        android:layout_width="322dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="16dp"
-        android:background="#9AD2F1"
-        android:text="Manage Members "
-        android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.617"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_post_btn2"
-        app:layout_constraintVertical_bias="0.78" />
+        app:layout_constraintVertical_bias="0.519" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,8 +19,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -50,7 +53,7 @@ public class CreateGroupsActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     private Uri ImageUri;
 
-    private DatabaseReference groupsRef;
+    private DatabaseReference groupsRef,UsersRef;
     private StorageReference groupImageReference;
     private String downloadUrl;
     private Spinner dropdown;
@@ -80,6 +83,7 @@ public class CreateGroupsActivity extends AppCompatActivity {
         groupImageReference= FirebaseStorage.getInstance().getReference().child("Group Images");
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         currentUserId=mAuth.getCurrentUser().getUid();
+        UsersRef=FirebaseDatabase.getInstance().getReference().child("Users");
         groupsRef= FirebaseDatabase.getInstance().getReference().child("Groups");
 
         addMake();
@@ -94,6 +98,8 @@ saveGroupInformation();
     }
 
     private void saveGroupInformation() {
+
+
         Calendar calFordDate = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
         String saveCurrentDate = currentDate.format(calFordDate.getTime());
@@ -102,7 +108,29 @@ saveGroupInformation();
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
         String saveCurrentTime = currentTime.format(calFordDate.getTime());
 
-        String postRandomName = groupownerid+ saveCurrentDate + saveCurrentTime;
+        final String postRandomName = groupownerid+ saveCurrentDate + saveCurrentTime;
+
+        UsersRef.addValueEventListener(new ValueEventListener() {
+            Map<String, Object> userMap = new HashMap<>();
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userMap.put("username", dataSnapshot.child(groupownerid).child("username").getValue().toString());
+                userMap.put("fullname", dataSnapshot.child(groupownerid).child("fullname").getValue().toString());
+                userMap.put("car", dataSnapshot.child(groupownerid).child("car").getValue().toString());
+                userMap.put("dob", dataSnapshot.child(groupownerid).child("dob").getValue().toString());
+                userMap.put("status", dataSnapshot.child(groupownerid).child("status").getValue().toString());
+                userMap.put("location", dataSnapshot.child(groupownerid).child("location").getValue().toString());
+                userMap.put("profileimage", dataSnapshot.child(groupownerid).child("profileimage").getValue().toString());
+                groupsRef.child(postRandomName).child("Members").child(currentUserId).updateChildren(userMap);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         if(groupname.getText().toString().isEmpty()||grouplocation.getText().toString().isEmpty())
         {
@@ -110,10 +138,8 @@ saveGroupInformation();
         }
         else {
             Map<String, Object> groupMap = new HashMap<>();
-            Map<String, Object> map = new HashMap<>();
 
-
-            map.put(groupownerid,groupownerid);
+            groupMap.put(groupownerid,groupownerid);
 
 
             groupMap.put("groupname", groupname.getText().toString());
@@ -122,7 +148,8 @@ saveGroupInformation();
             groupMap.put("groupstatus", "Enter Status here");
             groupMap.put("ownerid", groupownerid);
             groupMap.put("groupimage", downloadUrl);
-            groupsRef.child(postRandomName).updateChildren(map);
+
+
 
             groupsRef.child(postRandomName).updateChildren(groupMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -202,7 +229,7 @@ saveGroupInformation();
                 String model=full[2].substring(2,full[2].length()-2);
 
                 makeList.add(make + " " + model);
-                System.out.println(model);
+               
                 // read next line
                 line = reader.readLine();
             }

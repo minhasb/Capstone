@@ -48,7 +48,7 @@
 
 
     <ImageView
-        android:id="@+id/setup_group_pic"
+        android:id="@+id/setup_pic"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:onClick="onPic"

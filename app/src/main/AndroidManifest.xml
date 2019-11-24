@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ManageMembersActivity"></activity>
+        <activity android:name=".MessageActivity"></activity>
+        <activity android:name=".SendMessageActivity" />
+        <activity android:name=".ClickUserActivity" />
+        <activity android:name=".GroupMembersActivity" />
+        <activity android:name=".ManageMembersActivity" />
         <activity android:name=".MyGroupsActivity" />
         <activity android:name=".ClickGroupActivity" />
         <activity android:name=".ViewGroupsActivity" />

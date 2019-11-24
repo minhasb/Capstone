@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Groups {
-  private  String groupimage,groupcar,grouplocation,groupname,groupownerid,groupstatus;
+  private  String groupimage,groupcar,grouplocation,groupname,ownerid,groupstatus;
 private ArrayList<User> members;
 
 
@@ -56,11 +56,11 @@ private ArrayList<User> members;
         this.groupname = groupname;
     }
 
-    public String getGroupownerid() {
-        return groupownerid;
+    public String getOwnerid() {
+        return ownerid;
     }
 
-    public void setGroupownerid(String groupownerid) {
-        this.groupownerid = groupownerid;
+    public void setOwnerid(String ownerid) {
+        this.ownerid = ownerid;
     }
 }

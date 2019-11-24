@@ -30,67 +30,58 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.security.acl.Group;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MyGroupsActivity extends AppCompatActivity {
-
+public class GroupMembersActivity extends AppCompatActivity {
 
     private Query query;
     private FirebaseAuth mAuth;
-    private DatabaseReference UsersRef,GroupsRef;
+    private DatabaseReference UsersRef,PostsRef,groupref;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private RecyclerView postList;
     private CircleImageView NavProfileImage;
     private TextView NavProfileUserName;
-    private String currentUserID;
+    private String currentUserID,PostKey,car,groupownerid;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-
+        PostKey= getIntent().getExtras().get("PostKey").toString();
+        groupref=FirebaseDatabase.getInstance().getReference().child("Groups").child(PostKey);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_groups);
+        setContentView(R.layout.activity_group_members);
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth=FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
 
-        GroupsRef = FirebaseDatabase.getInstance().getReference().child("Groups");
-
-
-        //query = FirebaseDatabase.getInstance().getReference().child("Groups").orderByChild(currentUserID).equalTo(currentUserID);
-
-         query = FirebaseDatabase.getInstance().getReference().child("Groups").orderByChild(currentUserID).equalTo(currentUserID);
-
-
-
-
-       // query = FirebaseDatabase.getInstance().getReference().child("Groups");
-
-
+        PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        query = groupref.child("Members");
         drawerLayout=(DrawerLayout) findViewById(R.id.drawable_layout);
         navigationView=(NavigationView) findViewById(R.id.navigation_view);
         View navView = navigationView.inflateHeaderView(R.layout.navigation_header);
         NavProfileImage = (CircleImageView) navView.findViewById(R.id.header_image);
         NavProfileUserName = (TextView) navView.findViewById(R.id.header_username);
 
-//Toolbar
-        //Toolbar
-        Toolbar toolbar =  findViewById(R.id.toolbar);
-        toolbar.setTitle("My Groups");
-        setSupportActionBar(toolbar);
 
-        postList = (RecyclerView) findViewById(R.id.all_users_post_list);
+
+        postList = (RecyclerView) findViewById(R.id.all_group_members);
         postList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         postList.setLayoutManager(linearLayoutManager);
         DisplayAllUsersPosts();
-
+//Toolbar
+        Toolbar toolbar =  findViewById(R.id.toolbar);
+        toolbar.setTitle("Group Memebers");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -111,7 +102,7 @@ public class MyGroupsActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(MyGroupsActivity.this, "Profile name do not exists...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GroupMembersActivity.this, "Profile name do not exists...", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -132,39 +123,92 @@ public class MyGroupsActivity extends AppCompatActivity {
         onStart();
 
 
+        groupref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                groupownerid=dataSnapshot.child("ownerid").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
+    //Toolbar
+@Override
+    public boolean onOptionsItemSelected(MenuItem item){
+    if(item.getItemId()==android.R.id.home)
+    {
+        Intent clickPostIntent = new Intent (GroupMembersActivity.this
+                , ClickGroupActivity.class);
+
+        groupref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                car= dataSnapshot.child("groupcar").getValue().toString();
+                groupownerid=dataSnapshot.child("ownerid").getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        clickPostIntent.putExtra("Car",car);
+        clickPostIntent.putExtra("groupownerid",groupownerid);
+
+        clickPostIntent.putExtra("PostKey",PostKey);
+
+        startActivity(clickPostIntent);
+
+    }
+    return super.onOptionsItemSelected(item);
+
+}
+
 
     private void DisplayAllUsersPosts() {
 
-        FirebaseRecyclerOptions<Groups> options = new FirebaseRecyclerOptions.Builder<Groups>().setQuery(query, Groups.class).build();
-        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Groups, MyGroupsActivity.PostsViewHolder>(options) {
-            String car;
 
+        FirebaseRecyclerOptions<User> options = new FirebaseRecyclerOptions.Builder<User>().setQuery(query, User.class).build();
+        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<User, GroupMembersActivity.PostsViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull MyGroupsActivity.PostsViewHolder postsViewHolder, int position, @NonNull Groups groups) {
+            protected void onBindViewHolder(@NonNull GroupMembersActivity.PostsViewHolder postsViewHolder, int position, @NonNull User user) {
 
-                final String PostKey = getRef(position).getKey();
-                final String OwnerId=groups.getOwnerid();
+               final String userId = getRef(position).getKey();
 
-                postsViewHolder.setFullname(groups.getGroupname());
-                postsViewHolder.setLocation("Location: "+ groups.getGrouplocation());
-                postsViewHolder.setGroupCar("Group car:" + groups.getGroupcar());
-                postsViewHolder.setGroupstatus(groups.getGroupstatus());
-                postsViewHolder.setGroupImage(getApplicationContext(),groups.getGroupimage());
-
-
+               final String car=user.getCar();
+             final   String dob=user.getDob();
+               final String fullname=user.getFullname();
+                final String location= user.getLocation();
+              final  String profileimage=user.getProfileimage();
+              final  String status=user.getStatus();
+              final  String username=user.getUsername();
+                postsViewHolder.setFullname(user.getUsername());
+      postsViewHolder.setProfileImage(getApplicationContext(),user.getProfileimage());
 
                 postsViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent clickPostIntent = new Intent (MyGroupsActivity.this
-                                , ClickGroupActivity.class);
-
-                        clickPostIntent.putExtra("groupownerid",OwnerId);
+                        Intent clickPostIntent = new Intent (GroupMembersActivity.this
+                                , ClickUserActivity.class);
+                        clickPostIntent.putExtra("groupownerid",groupownerid);
+                        clickPostIntent.putExtra("car",car);
+                        clickPostIntent.putExtra("dob",dob);
+                        clickPostIntent.putExtra("fullname",fullname);
+                        clickPostIntent.putExtra("location",location);
+                        clickPostIntent.putExtra("profileimage",profileimage);
+                        clickPostIntent.putExtra("status",status);
+                        clickPostIntent.putExtra("username",username);
+                        clickPostIntent.putExtra("userid",userId);
                         clickPostIntent.putExtra("PostKey",PostKey);
 
 
-                       // clickPostIntent.putExtra("Car",car);
+
                         startActivity(clickPostIntent);
 
                     }
@@ -174,10 +218,10 @@ public class MyGroupsActivity extends AppCompatActivity {
 
             @NonNull
             @Override
-            public MyGroupsActivity.PostsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public GroupMembersActivity.PostsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.all_groups_layout,parent,false);
-                return new MyGroupsActivity.PostsViewHolder(view);
+                        .inflate(R.layout.all_users_layout,parent,false);
+                return new GroupMembersActivity.PostsViewHolder(view);
             }
         };
         adapter.startListening();
@@ -191,20 +235,6 @@ public class MyGroupsActivity extends AppCompatActivity {
 
     }
 
-    public void searchGroup(View view) {
-        Intent intent = new Intent (this,ViewGroupsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
-
-    public void createGroup(View view) {
-        Intent intent = new Intent (this,CreateGroupsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
-
     public static class PostsViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
@@ -215,31 +245,15 @@ public class MyGroupsActivity extends AppCompatActivity {
         }
 
         public void setFullname (String fullname){
-            TextView username = (TextView) mView.findViewById(R.id.click_group_name);
+            TextView username = (TextView) mView.findViewById(R.id.groupmemberuser_name);
             username.setText(fullname);
         }
 
+        public void setProfileImage (Context ctx, String profileimage){
+            CircleImageView image = (CircleImageView) mView.findViewById(R.id.groupmembers_profile_image);
+            Picasso.get().load(profileimage).into(image);
 
-        public void setLocation (String location){
-            TextView postDescription = (TextView) mView.findViewById(R.id.click_group_location);
-            postDescription.setText(location);
         }
-
-        public void setGroupCar(String car){
-            TextView groupCar = (TextView) mView.findViewById(R.id.click_group_car);
-            groupCar.setText(car);
-        }
-
-        public void setGroupstatus (String status){
-            TextView groupStatus = (TextView) mView.findViewById(R.id.click_group_status);
-            groupStatus.setText(status);
-        }
-
-        public void setGroupImage (Context ctx1, String postImage){
-            ImageView postImages = (ImageView) mView.findViewById(R.id.click_post_image2);
-            Picasso.get().load(postImage).into(postImages);
-        }
-
 
     }
     private void checkUserExistence(){
@@ -328,17 +342,10 @@ public class MyGroupsActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
         }
-        switch (item.getItemId())
-        {
-            case R.id.nav_all_posts:
-
-                Intent intent = new Intent(this, NewsActivity.class);
-                startActivity(intent);
-                break;
-        }
 
 
     }
+
 
 
 

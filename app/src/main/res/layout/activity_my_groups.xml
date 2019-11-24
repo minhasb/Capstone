@@ -20,19 +20,49 @@
 
         <FrameLayout
             android:id="@+id/main_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="400dp"
+            android:layout_height="513dp"
             android:layout_below="@+id/toolbar">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/all_users_post_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
+                android:layout_height="510dp" />
 
 
         </FrameLayout>
+        <Button
+            android:id="@+id/searchGroupsNav"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+            android:layout_width="132dp"
+            android:layout_height="72dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
+            android:text="Search Groups"
+            android:textSize="15dp"
+            android:layout_below="@id/main_container"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="searchGroup"
+            ></Button>
+
+        <Button
+            android:id="@+id/createGroupNav"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+            android:textSize="15dp"
+            android:layout_width="132dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="200dp"
+            android:text="Create a Group"
+            android:layout_below="@id/main_container"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="createGroup"
+            ></Button>
+
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -44,4 +74,5 @@
         app:menu="@menu/navigation_menu">
 
     </com.google.android.material.navigation.NavigationView>
+
 </androidx.drawerlayout.widget.DrawerLayout>

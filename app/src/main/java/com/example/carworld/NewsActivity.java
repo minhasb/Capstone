@@ -83,7 +83,7 @@ public class NewsActivity extends AppCompatActivity {
         Toolbar toolbar =  findViewById(R.id.toolbar);
         toolbar.setTitle("Posts");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+     //   getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
@@ -298,6 +298,15 @@ public class NewsActivity extends AppCompatActivity {
             case R.id.nav_groups:
 
                 Intent intent = new Intent(this, GroupsActivity.class);
+                startActivity(intent);
+                break;
+        }
+
+        switch (item.getItemId())
+        {
+            case R.id.nav_all_posts:
+
+                Intent intent = new Intent(this, NewsActivity.class);
                 startActivity(intent);
                 break;
         }

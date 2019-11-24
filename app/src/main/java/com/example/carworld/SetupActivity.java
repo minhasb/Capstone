@@ -73,12 +73,13 @@ public class SetupActivity extends AppCompatActivity {
       //  modelSpinner= findViewById(R.id.car);
         dropdown = (Spinner)findViewById(R.id.setup_group_carname);
         loadingbar= new ProgressDialog(this);
-        profilePic=findViewById(R.id.setup_group_pic);
-        mAuth=FirebaseAuth.getInstance();
-        userProfileImageReference=FirebaseStorage.getInstance().getReference().child("Profile Images");
+        //hiding keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        mAuth=FirebaseAuth.getInstance();
         currentUserId=mAuth.getCurrentUser().getUid();
+        userProfileImageReference = FirebaseStorage.getInstance().getReference().child("Profile Images");
         usersRef= FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
+        profilePic=findViewById(R.id.setup_pic);
 
 
         usersRef.addValueEventListener(new ValueEventListener() {
@@ -260,7 +261,7 @@ else {
                 String model=full[2].substring(2,full[2].length()-2);
 
                 makeList.add(make + " " + model);
-                System.out.println(model);
+
                 // read next line
                 line = reader.readLine();
             }

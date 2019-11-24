@@ -2,6 +2,7 @@ package com.example.carworld;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.renderscript.Sampler;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -43,8 +45,8 @@ public class ClickGroupActivity extends AppCompatActivity {
 
     private ImageView PostImage;
     private TextView GroupLocation,GroupName,GroupStatus,CarName;
-    private Button DeletePostButton,EditPostButton,DoneEditButton,JoinGroupButton,LeaveGroupButton,ManageMembers;
-    private String PostKey,currentUserID,databaseUserID,image;
+    private Button DeletePostButton,EditPostButton,DoneEditButton,JoinGroupButton,LeaveGroupButton;
+    private String PostKey,currentUserID,databaseUserID,image,groupownerid;
     private DatabaseReference ClickPostRef,UserRef;
     private FirebaseAuth mAuth;
     private Spinner dropdown;
@@ -60,10 +62,13 @@ public class ClickGroupActivity extends AppCompatActivity {
 
 
         PostKey= getIntent().getExtras().get("PostKey").toString();
+        groupownerid=getIntent().getExtras().get("groupownerid").toString();
         mAuth= FirebaseAuth.getInstance();
         currentUserID=mAuth.getCurrentUser().getUid();
-        UserRef =FirebaseDatabase.getInstance().getReference().child("Users");
+
+
         ClickPostRef= FirebaseDatabase.getInstance().getReference().child("Groups").child(PostKey);
+        UserRef= FirebaseDatabase.getInstance().getReference().child("Users");
         dropdown = (Spinner)findViewById(R.id.click_group_carname);
         dropdown.setEnabled(false);
         dropdown.setVisibility(View.INVISIBLE);
@@ -82,12 +87,17 @@ public class ClickGroupActivity extends AppCompatActivity {
         EditPostButton=(Button)findViewById(R.id.edit_post_btn2);
       DoneEditButton=(Button)findViewById(R.id.edit_done_button);
 
-      ManageMembers=(Button)findViewById(R.id.manage_members);
-      ManageMembers.setVisibility(View.INVISIBLE);
+
       JoinGroupButton=(Button)findViewById(R.id.join_group_button);
         LeaveGroupButton=(Button)findViewById(R.id.leave_group_button);
         LeaveGroupButton.setVisibility(View.INVISIBLE);
 
+// Toolbar
+        Toolbar toolbar =  findViewById(R.id.toolbar);
+        toolbar.setTitle("Group Details");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         addMake();
 
@@ -156,7 +166,7 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     EditPostButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            ManageMembers.setVisibility(View.VISIBLE);
+
                             DeletePostButton.setVisibility(View.INVISIBLE);
                             EditPostButton.setVisibility(View.INVISIBLE);
                             DoneEditButton.setVisibility(View.VISIBLE);
@@ -176,7 +186,6 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         public void onClick(View view) {
                             dropdown.setVisibility(View.INVISIBLE);
                             DeletePostButton.setVisibility(View.VISIBLE);
-                            ManageMembers.setVisibility(View.INVISIBLE);
 
                             GroupName=(TextView) findViewById(R.id.click_group_name);
                             GroupLocation=(TextView) findViewById(R.id.click_group_location);
@@ -204,12 +213,7 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
                         }
                     });
-                    ManageMembers.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            sendUserToMembers();
-                        }
-                    });
+
 
 
                     JoinGroupButton.setOnClickListener(new View.OnClickListener() {
@@ -231,6 +235,7 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                     userMap.put("dob", dataSnapshot.child(currentUserID).child("dob").getValue().toString());
                                     userMap.put("status", dataSnapshot.child(currentUserID).child("status").getValue().toString());
                                     userMap.put("location", dataSnapshot.child(currentUserID).child("location").getValue().toString());
+                                    userMap.put("profileimage", dataSnapshot.child(currentUserID).child("profileimage").getValue().toString());
                                   ClickPostRef.updateChildren(map);
                                     ClickPostRef.child("Members").child(currentUserID).updateChildren(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
@@ -302,6 +307,20 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
     }
 
+    // Toolbar
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()==android.R.id.home)
+        {
+            Intent clickPostIntent = new Intent (ClickGroupActivity.this
+                    , ViewGroupsActivity.class);
+
+            startActivity(clickPostIntent);
+
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
 
 
     /*
@@ -357,10 +376,21 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
         startActivity(intent);
         finish();
     }
-    private void sendUserToMembers() {
+    private void sendOwnerToMembers() {
         Intent intent = new Intent (this,ManageMembersActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra("PostKey",PostKey);
+        // clickPostIntent.putExtra("Car",car);
+
+
+        startActivity(intent);
+        finish();
+    }
+    private void sendUserToMembers() {
+        Intent intent = new Intent (this,GroupMembersActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("PostKey",PostKey);
+        intent.putExtra("groupownerid",groupownerid);
         // clickPostIntent.putExtra("Car",car);
 
 
@@ -442,5 +472,11 @@ ClickPostRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
         return 0;
     }
+
+    public void showMembers(View view) {
+
+sendUserToMembers();
+    }
+
 
 }

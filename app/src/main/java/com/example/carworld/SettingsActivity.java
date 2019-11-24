@@ -225,7 +225,7 @@ UpdateAccountSettingsButton.setOnClickListener(new View.OnClickListener() {
                 String model=full[2].substring(2,full[2].length()-2);
 
                 makeList.add(make + " " + model);
-                System.out.println(model);
+
                 // read next line
                 line = reader.readLine();
             }

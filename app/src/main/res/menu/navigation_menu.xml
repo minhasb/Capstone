@@ -4,6 +4,10 @@
         android:id="@+id/nav_post"
         android:title="Add Post"
         android:icon="@drawable/add_post"/>
+    <item
+        android:id="@+id/nav_all_posts"
+        android:title="All Posts"
+        android:icon="@drawable/postsicon"/>
 
     <item
     android:id="@+id/nav_profile"
@@ -13,18 +17,15 @@ android:title="Profile"
     <item
         android:id="@+id/nav_groups"
         android:title="Groups"
-        android:icon="@drawable/add_post" />
-    <item
-        android:id="@+id/nav_friends"
-        android:title="Friends"
-        android:icon="@drawable/friends"/>
+        android:icon="@drawable/friends" />
+
     <item
         android:id="@+id/nav_settings"
         android:title="Settings"
         android:icon="@drawable/settings"/>
     <item
         android:id="@+id/nav_logout"
-        android:title="logout"
+        android:title="Logout"
         android:icon="@drawable/logout"/>
 
 
